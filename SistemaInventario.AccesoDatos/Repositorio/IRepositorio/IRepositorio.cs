@@ -10,23 +10,26 @@ namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
     //creamos una interfaz generica para los repositorios que recibe un tipo generico y ejecuta las operaciones basicas de un CRUD
     public interface IRepositorio<T> where T : class
     {
-        T Obtener(int id);
+        //Task<T> es un tipo de retorno que se utiliza para operaciones asincronas
+        Task<T> Obtener(int id);
 
-        IEnumerable<T> ObtenerTodos(
+        //IEnumerable<T> es una interfaz que define una coleccion de objetos que se pueden enumerar
+        Task< IEnumerable<T>> ObtenerTodos(
             Expression<Func<T, bool>> filtro = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> ordenarPor = null,
             string incluirPropiedades = null,
             bool seguimientoEntidades = true
             );
 
-        T ObtenerPrimero(
+        Task<T> ObtenerPrimero(
             Expression<Func<T, bool>> filtro = null,
             string incluirPropiedades = null,
             bool seguimientoEntidades = true
             );
 
-        void agregar(T entidad);
+        Task agregar(T entidad);
 
+        //estos metodos no pueden ser asincronos porque no devuelven ningun valor
         void Remover(int id);
 
         void Remover(IEnumerable<T> entidad);
