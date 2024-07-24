@@ -10,7 +10,8 @@ namespace SistemaInventario.AccesoDatos.Repositorio
 {
     public class UnidadTrabajo : IUnidadTrabajo
     {
-        //
+        //UnidadTrabajo envuelve a todos los repositorios de cada uno de los modelos que se van a trabajar
+        //para que este accesible a todo el proyecto debemos agregarla como un servicio en la clase program.cs
         private readonly ApplicationDbContext _db;
         public IBodegaRepositorio Bodega { get; private set; }
 
