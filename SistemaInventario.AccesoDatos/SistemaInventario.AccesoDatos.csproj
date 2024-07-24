@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,12 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\SistemaInventario.Modelos\SistemaInventario.Modelos.csproj" />
+    <ProjectReference Include="..\SistemaInventario.Utilidades\SistemaInventario.Utilidades.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SistemaInventario.Modelos\SistemaInventario.Modelos.csproj" />
-    <ProjectReference Include="..\SistemaInventario.Utilidades\SistemaInventario.Utilidades.csproj" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
