@@ -1,13 +1,15 @@
 ﻿let datatable;
 
+/*esta funcion carga la funcion de load cuando se ingresa en el index */
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-    datatable = $('#tblDatos').DataTable({
+    datatable = $('#tblDatos').DataTable({        
 
-        "language": {
+            /* esto es para cambiar el lenguaje del datatable a español */
+            "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
             "zeroRecords": "Ningun Registro",
             "info": "Mostrar page _PAGE_ de _PAGES_",
@@ -43,6 +45,7 @@ function loadDataTable() {
                     }, "width": "20%"
                 },
                 {
+                    /* botones para editar y elminar en la columna */
                     "data": "id",
                     "render": function (data) {
                         return `
