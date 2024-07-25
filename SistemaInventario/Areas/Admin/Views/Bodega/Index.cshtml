@@ -3,6 +3,38 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- BTN para agregar deposito que redirecciona a otra vista con asp-action="Upsert"-->
+<div class="row">
+    <div class="col-lg-6">
+        <h2 class="text-primary">Lista de Depositos</h2>
+    </div>
+    <div class="col-lg-6">
+        <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nuevo Deposito</a>
+    </div>
+</div>
+<br />
 
-<h1>Index</h1>
+<!-- Aca esta el datatable con que va a desplegar la informacion-->
+<div class="p-4 border rounded bg-light">
+    <table id="tblDatos" class="p-4 table table-responsive table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
+        </tbody>    
+    </table>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/bodega.js"></script>
+    
+
+}
