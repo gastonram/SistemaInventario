@@ -21,7 +21,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)//de tipo get
         {
             Bodega bodega = new Bodega();
 
@@ -39,6 +39,26 @@ namespace SistemaInventario.Areas.Admin.Controllers
             }
             return View(bodega);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(Bodega bodega)
+        {
+            if (ModelState.IsValid)//valida que el modelo queestoy recibiendo sea valido
+            {
+                if (bodega.Id == 0)//se trata de un uevo registro
+                {
+                    await _unidadTrabajo.Bodega.Agregar(bodega);//los metodos stan en la carpeta IRepositorio
+                }
+                else
+                {
+                    _unidadTrabajo.Bodega.Actualizar(bodega);
+                }
+                await _unidadTrabajo.Guardar();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(bodega);//si el modelo no es valido lo regresa a la vista 
+        }   
 
 
         #region API

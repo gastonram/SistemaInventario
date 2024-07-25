@@ -27,7 +27,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
             bool seguimientoEntidades = true
             );
 
-        Task agregar(T entidad);
+        Task Agregar(T entidad);
 
         //estos metodos no pueden ser asincronos porque no devuelven ningun valor
         void Remover(int id);

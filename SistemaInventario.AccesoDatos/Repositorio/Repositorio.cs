@@ -22,7 +22,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
             this.dbSet = _bd.Set<T>();
         }
 
-        public async Task agregar(T entidad)
+        public async Task Agregar(T entidad)
         {
            await dbSet.AddAsync(entidad);//agrega la entidad a la base de datos
         }
