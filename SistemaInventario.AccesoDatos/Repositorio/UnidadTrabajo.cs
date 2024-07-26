@@ -14,11 +14,15 @@ namespace SistemaInventario.AccesoDatos.Repositorio
         //para que este accesible a todo el proyecto debemos agregarla como un servicio en la clase program.cs
         private readonly ApplicationDbContext _db;
         public IBodegaRepositorio Bodega { get; private set; }
+        public ICategoriaRepositorio Categoria { get; private set; }
+
+        
 
         public UnidadTrabajo(ApplicationDbContext db)
         {
             _db = db;
             Bodega = new BodegaRepositorio(_db);
+            Categoria = new CategoriaRepositorio(_db);
 
         }
         

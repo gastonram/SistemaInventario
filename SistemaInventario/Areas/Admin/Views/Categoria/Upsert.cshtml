@@ -1,0 +1,106 @@
+﻿@model SistemaInventario.Modelos.Categoria
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //En las vistas razor se puede agregar codigo c# en la parte superior de la vista
+    var titulo = "Crear Categoria";
+}
+
+<form method="post">
+    <div style="padding-left:15%; padding-right:15%;padding-bottom:inherit.4rem;">
+
+        <div>
+            <!--con el tag helper de asp validamos los datos con el modelo, esto nos va a ayudar para que se impriman en la vista todos los errores-->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+        @if (Model.Id != 0)
+        {
+            //si el id es diferente de 0, es porque estamos editando o actualizando y le cambio a la variable el nombre a esitar bodega
+            //cuando estoy actualizando siempre debo pasar el id a pesar de que no quiera se muestre en la vista
+            titulo = "Editar Categoria";
+            <input type="hidden" asp-for="Id" id="id" />
+            //el id es para capturar el valor y validar si esta creado o no con el metodo en bodegacontroller
+            // con este tag helper accedo a las propiedades de mi modelo
+        }
+        <div class="col-12 border-bottom p-0">
+            <h2 class="text-primary">@titulo</h2><!-- como es c# accedo a mi variable con el arroba y esto cambia dinamicamente el nombre-->
+
+        </div>
+
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Nombre</label>
+                <input type="text" asp-for="Nombre" class="form-control" placeholder="Nombre de la bodega" id="nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Descripcion</label>
+                <input type="text" asp-for="Descripcion" class="form-control" placeholder="Agregue una Descripcion" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="form-group col-md-6">
+                <label>Estado</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value=true>Activo</option>
+                    <option value=false>Inactivo</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <!--Aca van las vistas parciales con los botones -->
+        <div>
+            @if (Model.Id != 0)
+            {
+                //el nombre debe ser exacto a la vista parcial y le enviamos el id mediante la estiqueta model para que se pueda usar en la vista parcial
+                <partial name="_BotonesActualizarYRegresar" model="Model.Id"></partial>
+            }
+            else
+            {
+                <partial name="_BotonesCrearYRegresar"></partial>
+            }
+
+        </div>
+
+
+    </div>
+
+</form>
+
+@section Scripts {
+    <!-- para que me muestre los errores de validacion en los span debo pasarl el parcial que tiene los script de validaciones
+
+    estos se ejecutan de lado del cliente
+    -->
+    <partial name="_ValidationScriptsPartial"></partial>
+
+    <script>
+
+        document.getElementById("nombre").addEventListener('change', function () {//cuando cambia el nombre se dispara el evento
+            validarNombre();
+        });
+        function validarNombre() {
+            var url = '@Url.Content("~/")' + "Admin/Categoria/ValidarNombre";
+            var id = '#id';
+            var nombre = '#nombre';
+
+            $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
+                $.each(data, function (key, value) {
+                    if (value){
+                        var nombre = document.getElementById("nombre");//capturamos el elemento por el id del input
+                        swal("Error", "El nombre ya existe", "error");
+                        nombre.value = "";
+                    }
+
+                });
+            })
+
+        }
+
+    </script>
+}
