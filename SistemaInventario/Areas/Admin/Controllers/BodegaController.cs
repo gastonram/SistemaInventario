@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaInventario.AccesoDatos.Repositorio;
 using SistemaInventario.Modelos;
+using SistemaInventario.Utilidades;
 
 namespace SistemaInventario.Areas.Admin.Controllers
 {
@@ -49,14 +50,18 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 if (bodega.Id == 0)//se trata de un uevo registro
                 {
                     await _unidadTrabajo.Bodega.Agregar(bodega);//los metodos stan en la carpeta IRepositorio
+                    TempData[DS.Exitosa] = "Se creo el deposito correctamente";
                 }
                 else
                 {
                     _unidadTrabajo.Bodega.Actualizar(bodega);
+                    TempData[DS.Exitosa] = "Se modifico el deposito de manera exitosa";
+
                 }
                 await _unidadTrabajo.Guardar();
                 return RedirectToAction(nameof(Index));
             }
+            TempData[DS.Error] = "Error al guardar el deposito";
             return View(bodega);//si el modelo no es valido lo regresa a la vista 
         }   
 
