@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
 {
-    public interface ICategoriaRepositorio : IRepositorio<Categoria>
+    public interface IMarcaRepositorio : IRepositorio<Marca>
     {
-        //recibe una categoria y la actualiza en la base de datos
+        //recibe una marca y la actualiza en la base de datos
         //se maneja de manera individual ya que cada objeto es particular
-        void Actualizar(Categoria categoria);
+        void Actualizar(Marca marca);
 
     }
 }
