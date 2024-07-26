@@ -70,6 +70,19 @@ namespace SistemaInventario.Areas.Admin.Controllers
             return Json(new { data = todas });//en el javascript se lo va a referenciar por el nombre de data
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)//este metodo se encuentra en el javascript bodega.js
+        {
+            var bodegaDesdeDb = await _unidadTrabajo.Bodega.Obtener(id);
+            if (bodegaDesdeDb == null)
+            {
+                return Json(new { success = false, message = "Error al borrar la bodega" });
+            }
+            _unidadTrabajo.Bodega.Remover(bodegaDesdeDb.Id);
+            await _unidadTrabajo.Guardar();
+            return Json(new { success = true, message = "Bodega borrada con exito" });
+        }
+
         #endregion
     }
 }
