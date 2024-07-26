@@ -88,6 +88,28 @@ namespace SistemaInventario.Areas.Admin.Controllers
             return Json(new { success = true, message = "Bodega borrada con exito" });
         }
 
+
+        [ActionName("ValidarNombre")]
+        public async Task<IActionResult> ValidarNombre(string nombre, int id =0)
+        {
+            bool valor = false;
+            var lista = await _unidadTrabajo.Bodega.ObtenerTodos();
+            if(id==0)
+            {
+                valor = lista.Any(x => x.Nombre.ToLower().Trim() == nombre.ToLower().Trim());
+            }
+            else
+            {
+                valor = lista.Any(x => x.Nombre.ToLower().Trim() == nombre.ToLower().Trim() && x.Id != id);
+
+            }
+            if (valor)
+            {
+                return Json(new {data = true});
+            }
+            return Json(new { data = false });
+        }
+
         #endregion
     }
 }
