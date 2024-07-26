@@ -81,7 +81,7 @@
 
     <script>
 
-        document.getElementById("nombre").addEventListener('change', function () {
+        document.getElementById("nombre").addEventListener('change', function () {//cuando cambia el nombre se dispara el evento
             validarNombre();
         });
         function validarNombre() {
@@ -92,7 +92,7 @@
             $.getJSON(url, { id: $(id).val(), nombre: $(nombre).val() }, function (data) {
                 $.each(data, function (key, value) {
                     if (value){
-                        var nombre = document.getElementById("nombre");
+                        var nombre = document.getElementById("nombre");//capturamos el elemento por el id del input
                         swal("Error", "El nombre ya existe", "error");
                         nombre.value = "";
                     }
