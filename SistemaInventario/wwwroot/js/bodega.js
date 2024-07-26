@@ -7,7 +7,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     datatable = $('#tblDatos').DataTable({
-
+        responsive: true,
         /* esto es para cambiar el lenguaje del datatable a español */
         "language": {
             "lengthMenu": "Mostrar _MENU_ Registros Por Pagina",
@@ -30,7 +30,7 @@ function loadDataTable() {
         },
         "columns":
             [
-                { "data": "id", "width": "5%" },
+                
                 { "data": "nombre", "width": "20%" },
                 { "data": "descripcion", "width": "40%" },
                 {
