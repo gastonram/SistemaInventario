@@ -42,7 +42,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Inventario}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Inventario}/{controller=Home}/{action=Index}/{id?}");//esta ruta nos indica la primera pagina que se va a cargar
 app.MapRazorPages();
 
 app.Run();
