@@ -12,5 +12,7 @@ namespace SistemaInventario.Utilidades
 
         public const string Error = "Operación fallida";
 
+        public const string ImagenRuta = @"\imagenes\producto\";//para acceder a esta ruta mediante la constante
+
     }
 }

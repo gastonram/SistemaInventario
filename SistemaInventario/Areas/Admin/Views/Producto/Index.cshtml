@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- BTN para agregar deposito que redirecciona a otra vista con asp-action="Upsert"-->
+<div class="row">
+    <div class="col-lg-6">
+        <h2 class="text-primary">Lista de Productos</h2>
+    </div>
+    <div class="col-lg-6">
+        <a class="btn btn-outline-primary" asp-action="Upsert"> <i class="bi bi-plus-square-fill"></i> Crear Nuevo Producto</a>
+    </div>
+</div>
+<br />
+
+<!-- Aca esta el datatable con que va a desplegar la informacion-->
+<div class="p-4 border rounded bg-light">
+    <div class="table-responsive">
+        <!-- Añadido para la responsividad -->
+        <table id="tblDatos" class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    
+                    <th>Numero Serie</th>
+                    <th>Descripción</th>
+                    <th>Categoria</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/js/producto.js"></script>
+
+
+}
