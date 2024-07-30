@@ -19,7 +19,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 d-flex">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Buscar Productos..." aria-label="Buscar Producto" aria-describedby="button-addon2"
-                    name="busqueda" value="@ViewData["BusquedaActual"]"<!--name tiene que ser exactamente igual al parametro del metodo index, value se va a mantener en la caja de texto-->
+                    name="busqueda" value="@ViewData["BusquedaActual"]"<!--name tiene que ser exactamente igual al parametro del metodo index-->
                     >
                     <button type="submit" class="btn btn-outline-primary">
                         <i class="bi bi-search"></i> Buscar
@@ -49,7 +49,7 @@
 
             <!-- Este boton siempre me va a llevar a la pagina 1-->
         <a asp-action="Index" asp-route-pageNumber="@(1)" class="btn btn-outline-primary"
-           asp-route-busquedaActual="@ViewData["BusquedaActual"]">
+           asp-route-busquedaActual="@ViewData["BusquedaActual"]"><!-- Este ViewData hace que en mi metodo index me mantenga en la busqueda hasta que elimine lo que escribi -->
             <i class="bi bi-skip-start-fill"></i>
         </a>
 
