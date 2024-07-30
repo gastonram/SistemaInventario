@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaInventario.AccesoDatos.Data;
 using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
+using SistemaInventario.Modelos.Especificaciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,6 +102,35 @@ namespace SistemaInventario.AccesoDatos.Repositorio
         public void Remover(IEnumerable<T> entidad)
         {
             dbSet.RemoveRange(entidad);//remueve un rango de entidades
+        }
+
+
+        //Implementacion del metodo de paginado
+        public PagedList<T> ObtenerTodosPaginado(Parametros parametros, Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> ordenarPor = null, string incluirPropiedades = null, bool seguimientoEntidades = true)
+        {
+            IQueryable<T> query = dbSet;
+            if (filtro != null)
+            {
+                query = query.Where(filtro);//aplica el filtro a la consulta select/* from table where filtro
+            }
+            if (incluirPropiedades != null)
+            {
+                //es una cadena de caracteres, la recorro caracter por caracter y la separo por comas y la convierto en un array de string y la recorro con un foreach y la incluyo en la consulta 
+                foreach (var propiedad in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(propiedad);//incluye las propiedades de la entidad
+                }
+            }
+            if (ordenarPor != null)
+            {
+                //ejecuta la consulta y la ordena por lo que se envia por parametro
+                query = ordenarPor(query);//ordena la consulta
+            }
+            if (!seguimientoEntidades)
+            {
+                query = query.AsNoTracking();//no sigue las entidades
+            }
+            return PagedList<T>.ToPagedList(query, parametros.PageNumber, parametros.Pagesize);
         }
     }
 }

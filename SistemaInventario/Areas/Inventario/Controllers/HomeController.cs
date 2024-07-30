@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
 using SistemaInventario.Modelos;
+using SistemaInventario.Modelos.Especificaciones;
 using SistemaInventario.Modelos.ViewModel;
 
 using System.Diagnostics;
@@ -19,10 +20,48 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             _unidadTrabajo = unidadTrabajo;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int pagenumber = 1,string busqueda="",string busquedaActual="")
         {
-            IEnumerable<Producto> ProductosLista = await _unidadTrabajo.Producto.ObtenerTodos();
-            return View(ProductosLista);
+            if ( !String.IsNullOrEmpty(busqueda))
+            {
+                pagenumber = 1;
+            }
+            else
+            {
+                busqueda = busquedaActual;
+            }
+            ViewData["BusquedaActual"] = busqueda;
+
+            
+            if (pagenumber < 0) { pagenumber = 1; }
+
+            Parametros parametros = new Parametros()
+            {
+                PageNumber = pagenumber,
+                Pagesize = 4
+            };
+            var resultado = _unidadTrabajo.Producto.ObtenerTodosPaginado(parametros);
+
+            //sentencia para la configuracion de la busqueda
+            if (!String.IsNullOrEmpty(busqueda))
+            {
+                resultado = _unidadTrabajo.Producto.ObtenerTodosPaginado(parametros,p=>p.Descripcion.Contains(busqueda));
+
+            }
+
+            //Sentencia para configurar la paginacion
+            ViewData["TotalPAginas"] = resultado.MetaData.TotalPages;
+            ViewData["TotalRegistros"] = resultado.MetaData.TotalCount;
+            ViewData["Pagesize"] = resultado.MetaData.PageSize;
+            ViewData["PageNumber"] = pagenumber;
+            ViewData["Previo"] = "disabled";//clase css para deshabilitar el boton
+            ViewData["Siguiente"] = "";
+
+            if(pagenumber > 1) { ViewData["Previo"] = ""; }
+            if (resultado.MetaData.TotalPages <= pagenumber) { ViewData["siguiente"] = "disabled"; }
+
+
+            return View(resultado);
         }
 
         public IActionResult Privacy()
