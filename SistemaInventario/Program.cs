@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SistemaInventario.AccesoDatos.Data;
 using SistemaInventario.AccesoDatos.Repositorio;
 using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
+using SistemaInventario.Utilidades;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +15,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)//modificamos el servicio para que me permita crear con roles
+    .AddDefaultTokenProviders()//agrego este metodo para que me permita crear roles
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<IUnidadTrabajo, UnidadTrabajo>();
 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();//agrego el servicio de email sender
+builder.Services.AddRazorPages();//Agrego el servicio de razor pages
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
