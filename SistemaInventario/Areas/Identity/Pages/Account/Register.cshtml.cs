@@ -220,6 +220,14 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
                         }
                     }
                 }
+                Input = new InputModel()
+                {//carga los roles en la lista
+                    ListaRol = _roleManager.Roles.Where(u => u.Name != DS.Rol_Cliente).Select(x => x.Name).Select(l => new SelectListItem
+                    {
+                        Text = l,
+                        Value = l
+                    })
+                };
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
