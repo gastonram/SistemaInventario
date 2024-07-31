@@ -208,14 +208,15 @@ namespace SistemaInventario.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        if (user.Role==null) { 
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (user.Role == null)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
                         }
                         else
                         {
-                            //si el usuario es admin lo redirigimos a la lista de usuarios
-                            return RedirectToPage("Index", "Usuario", new {Area ="Admin"});
+                            //Administrador esta creando un usuario
+                            return RedirectToAction("Index", "Usuario", new { Area = "Admin" });
                         }
                     }
                 }
