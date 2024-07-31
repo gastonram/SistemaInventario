@@ -20,6 +20,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
 
         public IUsuarioAplicacionRepositorio UsuarioAplicacion { get; private set; }
         public IBodegaProductoRepositorio BodegaProducto { get; private set; }
+        public IInventarioRepositorio Inventario { get; private set; }
 
 
 
@@ -33,6 +34,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
             Producto = new ProductoRepositorio(_db);
             UsuarioAplicacion = new UsuarioAplicacionRepositorio(_db);
             BodegaProducto = new BodegaProductoRepositorio(_db);
+            Inventario = new InventarioRepositorio(_db);
 
         }
         
