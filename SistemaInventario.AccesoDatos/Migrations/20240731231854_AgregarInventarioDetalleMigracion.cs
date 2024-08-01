@@ -9,7 +9,7 @@ namespace SistemaInventario.AccesoDatos.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "inventarioDetalles",
+                name: "InventarioDetalles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -36,19 +36,19 @@ namespace SistemaInventario.AccesoDatos.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_inventarioDetalles_InventarioId",
-                table: "inventarioDetalles",
+                table: "InventarioDetalles",
                 column: "InventarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_inventarioDetalles_ProductoId",
-                table: "inventarioDetalles",
+                table: "InventarioDetalles",
                 column: "ProductoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "inventarioDetalles");
+                name: "InventarioDetalles");
         }
     }
 }

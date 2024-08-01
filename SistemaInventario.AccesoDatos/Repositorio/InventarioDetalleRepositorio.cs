@@ -22,7 +22,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
         public void Actualizar(InventarioDetalle inventarioDetalle)
         {
             //captura por medio del dbcontext el registro por medio del id
-            var inventarioDetalleBD = _db.inventarioDetalles.FirstOrDefault(s => s.Id == inventarioDetalle.Id);
+            var inventarioDetalleBD = _db.InventarioDetalles.FirstOrDefault(s => s.Id == inventarioDetalle.Id);
             if (inventarioDetalleBD != null)
             {
                 inventarioDetalleBD.StockAnterior = inventarioDetalle.StockAnterior;

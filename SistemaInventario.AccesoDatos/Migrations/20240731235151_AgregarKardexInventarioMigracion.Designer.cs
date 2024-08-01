@@ -12,8 +12,8 @@ using SistemaInventario.AccesoDatos.Data;
 namespace SistemaInventario.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240731231854_AgregarInventarioDetalleMigracion")]
-    partial class AgregarInventarioDetalleMigracion
+    [Migration("20240731235151_AgregarKardexInventarioMigracion")]
+    partial class AgregarKardexInventarioMigracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -368,6 +368,57 @@ namespace SistemaInventario.AccesoDatos.Migrations
                     b.ToTable("InventarioDetalles");
                 });
 
+            modelBuilder.Entity("SistemaInventario.Modelos.KardexInventario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BodeaProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Costo")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Detalle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaRegistro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockAnterior")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UsuarioAplicacionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BodeaProductoId");
+
+                    b.HasIndex("UsuarioAplicacionId");
+
+                    b.ToTable("KardexInventarios");
+                });
+
             modelBuilder.Entity("SistemaInventario.Modelos.Marca", b =>
                 {
                     b.Property<int>("Id")
@@ -582,6 +633,25 @@ namespace SistemaInventario.AccesoDatos.Migrations
                     b.Navigation("Inventario");
 
                     b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("SistemaInventario.Modelos.KardexInventario", b =>
+                {
+                    b.HasOne("SistemaInventario.Modelos.BodegaProducto", "BodegaProducto")
+                        .WithMany()
+                        .HasForeignKey("BodeaProductoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SistemaInventario.Modelos.UsuarioAplicacion", "UsuarioAplicacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAplicacionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BodegaProducto");
+
+                    b.Navigation("UsuarioAplicacion");
                 });
 
             modelBuilder.Entity("SistemaInventario.Modelos.Producto", b =>
