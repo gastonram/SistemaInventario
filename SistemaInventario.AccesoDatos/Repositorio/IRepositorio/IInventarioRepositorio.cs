@@ -14,7 +14,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
         //se maneja de manera individual ya que cada objeto es particular
         void Actualizar(Inventario inventario);
 
-        
+        IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj);
 
     }
 }

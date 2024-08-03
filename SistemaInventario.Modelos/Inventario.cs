@@ -24,7 +24,7 @@ namespace SistemaInventario.Modelos
         [Required]
         public DateTime FechaFinal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Debe seleccionar una Bodega para continuar")]//los mensajes de error se pueden personalizar de esta forma para que se vean en la vista
         public int BodegaId { get; set; }
 
         [ForeignKey("BodegaId")]

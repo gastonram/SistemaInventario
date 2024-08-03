@@ -33,5 +33,17 @@ namespace SistemaInventario.AccesoDatos.Repositorio
             }
         }
 
+        public IEnumerable<SelectListItem> ObtenerTodosDropdownLista(string obj)
+        {
+            if (obj == "Bodega")
+            {
+                return _db.Bodegas.Where(b => b.Estado == true).Select(b => new SelectListItem
+                {
+                    Text = b.Nombre,
+                    Value = b.Id.ToString()
+                });
+            }
+            return null;
+        }
     }
 }
