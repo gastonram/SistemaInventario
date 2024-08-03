@@ -74,4 +74,8 @@ app.MapControllerRoute(
     pattern: "{area=Inventario}/{controller=Home}/{action=Index}/{id?}");//esta ruta nos indica la primera pagina que se va a cargar
 app.MapRazorPages();
 
+IWebHostEnvironment env = app.Environment;
+Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath,"..\\Rotativa\\Windows\\");//para acceder al directorio de la libreria y generar los reportes
+
+
 app.Run();

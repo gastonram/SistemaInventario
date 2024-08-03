@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Rotativa.AspNetCore;
 using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
 using SistemaInventario.Modelos;
 using SistemaInventario.Modelos.ViewModels;
@@ -217,7 +217,32 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 
             return View(kardexInventarioVM);
         }
+        //metodo para imprimir con la libreria Rotativa
+        public async Task<IActionResult> ImprimirKardex(string fechaInicio, string fechaFinal, int productoId)
+        {
+            KardexInventarioVM kardexInventarioVM = new KardexInventarioVM();
+            kardexInventarioVM.Producto = new Producto();
+            kardexInventarioVM.Producto = await _unidadTrabajo.Producto.Obtener(productoId);
 
+            kardexInventarioVM.FechaInicio = DateTime.Parse(fechaInicio);
+            kardexInventarioVM.FechaFinal = DateTime.Parse(fechaFinal);
+
+            kardexInventarioVM.KardexInventarioLista = await _unidadTrabajo.KardexInventario.ObtenerTodos(
+                                                                   k => k.BodegaProducto.ProductoId == productoId &&
+                                                                       (k.FechaRegistro >= kardexInventarioVM.FechaInicio &&
+                                                                        k.FechaRegistro <= kardexInventarioVM.FechaFinal),
+                                            incluirPropiedades: "BodegaProducto,BodegaProducto.Producto,BodegaProducto.Bodega",
+                                            ordenarPor: o => o.OrderBy(o => o.FechaRegistro)
+                );
+
+            return new ViewAsPdf("ImprimirKardex", kardexInventarioVM)
+            {
+                FileName = "Detalle_Inventario.pdf",
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                CustomSwitches = "--page-offset 0 --footer-center [page] --footer-font-size 12"
+            };
+        }
 
 
         #region API
