@@ -47,6 +47,12 @@ builder.Services.AddScoped<IUnidadTrabajo, UnidadTrabajo>();
 
 builder.Services.AddSingleton<IEmailSender, EmailSender>();//agrego el servicio de email sender
 builder.Services.AddRazorPages();//Agrego el servicio de razor pages
+builder.Services.AddSession(options =>
+{//agrego el servicio de sesiones
+    options.IdleTimeout = TimeSpan.FromMinutes(30);//le indico que dura 30 minutos maximo al sesion inactiva
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,7 +71,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();//agrego el uso de sesiones
 app.UseAuthentication();
 app.UseAuthorization();
 

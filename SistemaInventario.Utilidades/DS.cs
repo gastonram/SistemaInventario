@@ -14,9 +14,12 @@ namespace SistemaInventario.Utilidades
 
         public const string ImagenRuta = @"\imagenes\producto\";//para acceder a esta ruta mediante la constante
 
+        public const string ssCarroCompras = "Sesion Carro Compras";
+
         public const string Rol_Admin = "Admin";
         public const string Rol_Cliente = "Cliente";
         public const string Rol_Inventario = "Inventario";
+
 
 
     }
