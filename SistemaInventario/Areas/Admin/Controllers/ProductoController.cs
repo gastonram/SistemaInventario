@@ -81,7 +81,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
                 {
                     //Editar Producto
                     var objProducto = await _unidadTrabajo.Producto.ObtenerPrimero(p => p.Id == productoVM.Producto.Id, seguimientoEntidades: false);
-                    if (files.Count > 0)// si el usuario selecciono una nueva imagen para el producto existente
+                    if (files.Count > 0)// si el usuario selecciono una nueva imagen para el Producto existente
                     {
                         string upload = webRootPath + DS.ImagenRuta;
                         string filename = Guid.NewGuid().ToString();
@@ -125,7 +125,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ObtenerTodos()
         {
-            var todas = await _unidadTrabajo.Producto.ObtenerTodos(incluirPropiedades: "Categoria,Marca");//esto nos traera los datos del producto y tambien a que categoria y marca pertenecen
+            var todas = await _unidadTrabajo.Producto.ObtenerTodos(incluirPropiedades: "Categoria,Marca");//esto nos traera los datos del Producto y tambien a que categoria y marca pertenecen
             return Json(new { data = todas });//en el javascript se lo va a referenciar por el nombre de data
         }
 
@@ -137,7 +137,7 @@ namespace SistemaInventario.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error al borrar el Producto" });
             }
-            //debemos eliminar la imagen antes de eliminar el producto
+            //debemos eliminar la imagen antes de eliminar el Producto
             string upload = _webHostEnvironment.WebRootPath + DS.ImagenRuta;
             var anteriorFilePath = Path.Combine(upload, productoDesdeDb.ImagenUrl);
             if (System.IO.File.Exists(anteriorFilePath))//busco si existe en mis carpetas de archivo

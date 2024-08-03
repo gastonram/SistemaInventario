@@ -44,9 +44,9 @@ namespace SistemaInventario.Modelos
         [ForeignKey("MarcaId")]//para relacionarlos con la tabla marca debe ser exactamente el mismo nombre que la propiedad
         public Marca Marca { get; set; }
 
-        public int? PadreId { get; set; }//una propiedad padre que se relacione con la misma tabla de mi modelo producto
+        public int? PadreId { get; set; }//una propiedad padre que se relacione con la misma tabla de mi modelo Producto
                                          //, necesitamos que se grabe como null en la base de datos porque sino se guarda como 0 y trae problemas
-        public virtual Producto Padre { get; set; }//relacion con la misma tabla de producto, recursividad. un producto puede estar relacionado a un mismo producto
+        public virtual Producto Padre { get; set; }//relacion con la misma tabla de Producto, recursividad. un Producto puede estar relacionado a un mismo Producto
 
 
     }

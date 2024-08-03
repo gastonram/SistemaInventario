@@ -82,10 +82,10 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             inventarioVM = new InventarioVM();
             inventarioVM.Inventario = await _unidadTrabajo.Inventario.ObtenerPrimero(i => i.Id == InventarioId);
             var bodegaProducto = await _unidadTrabajo.BodegaProducto.ObtenerPrimero(b => b.ProductoId == productoId &&
-                                                                                        b.BodegaId == inventarioVM.Inventario.BodegaId);//verifico si ya existe el producto en la bodega
-            
+                                                                                        b.BodegaId == inventarioVM.Inventario.BodegaId);//verifico si ya existe el Producto en la bodega
+
             var detalle = await _unidadTrabajo.InventarioDetalle.ObtenerPrimero(d => d.InventarioId == InventarioId &&
-                                                                                   d.ProductoId == productoId);//verifico si ya existe un detalle con el producto en el nuevo inventario
+                                                                                   d.ProductoId == productoId);//verifico si ya existe un detalle con el Producto en el nuevo inventario
             if (detalle == null)
             {//creo un nuevo detalle
                 inventarioVM.InventarioDetalle = new InventarioDetalle();
@@ -152,7 +152,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 
             foreach (var item in detalleLista)
             {
-                var bodegaProducto = new BodegaProducto();//quiero saber si el producto ya existe en la bodega actualmente
+                var bodegaProducto = new BodegaProducto();//quiero saber si el Producto ya existe en la bodega actualmente
                 bodegaProducto = await _unidadTrabajo.BodegaProducto.ObtenerPrimero(b => b.ProductoId == item.ProductoId &&
                                                                                          b.BodegaId == inventario.BodegaId);
                 if (bodegaProducto != null) //  El registro de Stock existe, hay que actualizar las cantidades
@@ -185,7 +185,7 @@ namespace SistemaInventario.Areas.Inventario.Controllers
             return RedirectToAction("Index");
 
         }
-        
+
 
         public IActionResult KardexProducto()
         {
@@ -196,6 +196,26 @@ namespace SistemaInventario.Areas.Inventario.Controllers
         public IActionResult KardexProducto(string fechaInicioId, string fechaFinalId, int productoId)
         {
             return RedirectToAction("KardexProductoResultado", new { fechaInicioId, fechaFinalId, productoId });
+        }
+
+        public async Task<IActionResult> KardexProductoResultado(string fechaInicioId, string fechaFinalId, int productoId)
+        {
+            KardexInventarioVM kardexInventarioVM = new KardexInventarioVM();
+            kardexInventarioVM.Producto = new Producto();
+            kardexInventarioVM.Producto = await _unidadTrabajo.Producto.Obtener(productoId);
+
+            kardexInventarioVM.FechaInicio = DateTime.Parse(fechaInicioId); //  00:00:00
+            kardexInventarioVM.FechaFinal = DateTime.Parse(fechaFinalId).AddHours(23).AddMinutes(59);
+
+            kardexInventarioVM.KardexInventarioLista = await _unidadTrabajo.KardexInventario.ObtenerTodos(
+                                                                   k => k.BodegaProducto.ProductoId == productoId &&
+                                                                       (k.FechaRegistro >= kardexInventarioVM.FechaInicio &&
+                                                                        k.FechaRegistro <= kardexInventarioVM.FechaFinal),
+                                            incluirPropiedades: "BodegaProducto,BodegaProducto.Producto,BodegaProducto.Bodega",
+                                            ordenarPor: o => o.OrderBy(o => o.FechaRegistro)
+                );
+
+            return View(kardexInventarioVM);
         }
 
 
@@ -210,13 +230,13 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 
         [HttpGet]
         public async Task<IActionResult> BuscarProducto(string term)
-        {//metodo para buscar producto por descripcion o numero de serie
+        {//metodo para buscar Producto por descripcion o numero de serie
             if (!string.IsNullOrEmpty(term))
             {
                 var listaProductos = await _unidadTrabajo.Producto.ObtenerTodos(p => p.Estado == true);
                 var data = listaProductos.Where(x => x.NumeroSerie.Contains(term, StringComparison.OrdinalIgnoreCase) ||
                                                      x.Descripcion.Contains(term, StringComparison.OrdinalIgnoreCase)).ToList();
-                return Ok(data);//retorna el producto encontrado
+                return Ok(data);//retorna el Producto encontrado
             }
             return Ok();//retorna vacio
         }

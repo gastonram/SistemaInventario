@@ -21,7 +21,7 @@ namespace SistemaInventario.Modelos
 
         [Required]
         [MaxLength(100)]
-        public string Tipo { get; set; }// marca si entrada de producto o salida en caso de venta
+        public string Tipo { get; set; }// marca si entrada de Producto o salida en caso de venta
 
         [Required]
         public string Detalle { get; set; }
