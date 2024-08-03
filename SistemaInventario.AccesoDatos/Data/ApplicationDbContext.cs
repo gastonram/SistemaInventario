@@ -26,6 +26,11 @@ namespace SistemaInventario.AccesoDatos.Data
 
         public DbSet<Compania> Companias { get; set; }
 
+        public DbSet<CarroCompra> CarroCompras { get; set; }
+        public DbSet<Orden> Ordenes { get; set; }
+
+        public DbSet<OrdenDetalle> OrdenDetalles { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
