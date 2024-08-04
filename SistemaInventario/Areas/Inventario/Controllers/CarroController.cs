@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
+using SistemaInventario.Modelos;
 using SistemaInventario.Modelos.ViewModels;
 using SistemaInventario.Utilidades;
 using System.Security.Claims;
@@ -89,6 +90,50 @@ namespace SistemaInventario.Areas.Inventario.Controllers
 
             HttpContext.Session.SetInt32(DS.ssCarroCompras, numeroProductos - 1);
             return RedirectToAction("Index");
+        }
+
+
+        public async Task<IActionResult> Proceder()
+        {
+            var claimIdentidad = (ClaimsIdentity)User.Identity;
+            var claim = claimIdentidad.FindFirst(ClaimTypes.NameIdentifier);
+
+            CarroComprasVM = new CarroComprasVM()
+            {
+                Orden = new Modelos.Orden(),
+                CarroCompraLista = await _unidadTrabajo.CarroCompra.ObtenerTodos(c => c.UsuarioAplicacionId == claim.Value, incluirPropiedades: "Producto"),
+                Compania = await _unidadTrabajo.Compania.ObtenerPrimero(),
+
+            };
+            CarroComprasVM.Orden.TotalOrden = 0;
+            CarroComprasVM.Orden.UsuarioAplicacion = await _unidadTrabajo.UsuarioAplicacion.ObtenerPrimero(u => u.Id == claim.Value);
+
+            foreach (var lista in CarroComprasVM.CarroCompraLista)
+            {
+                lista.Precio = lista.Producto.Precio;//siempre muestra el precio actual del producto
+                CarroComprasVM.Orden.TotalOrden += (lista.Precio * lista.Cantidad);
+            }
+
+            //obtengo los datos navegando por las propiedades de los objetos orden que esta en carrocomprasVM
+            CarroComprasVM.Orden.NombresCliente = CarroComprasVM.Orden.UsuarioAplicacion.Nombres + " " + CarroComprasVM.Orden.UsuarioAplicacion.Apellidos;
+            CarroComprasVM.Orden.Telefono = CarroComprasVM.Orden.UsuarioAplicacion.PhoneNumber;
+            CarroComprasVM.Orden.Direccion = CarroComprasVM.Orden.UsuarioAplicacion.Direccion;
+            CarroComprasVM.Orden.Ciudad = CarroComprasVM.Orden.UsuarioAplicacion.Ciudad;
+            CarroComprasVM.Orden.Pais = CarroComprasVM.Orden.UsuarioAplicacion.Pais;
+
+            //CONTROLAR EL STOCK
+            foreach(var lista in CarroComprasVM.CarroCompraLista    )
+            {
+                //capturar el Stock de cada POroducto
+                var producto = await _unidadTrabajo.BodegaProducto.ObtenerPrimero(p => p.ProductoId == lista.ProductoId && p.BodegaId== CarroComprasVM.Compania.BodegaVentaId );
+                if (lista.Cantidad > producto.Cantidad)
+                {
+                    TempData[DS.Error]= "Error: La Cantidad del Producto " + lista.Producto.Descripcion + " solicitada, Exede alStock actual ( "+producto.Cantidad+" )";
+                    return RedirectToAction("Index");
+                }
+            }
+                return View(CarroComprasVM);
+
         }
 
     }

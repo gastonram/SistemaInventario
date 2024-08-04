@@ -1,4 +1,6 @@
 ﻿@model SistemaInventario.Modelos.Especificaciones.PagedList<SistemaInventario.Modelos.Producto>//implementamos la paginacion
+
+
 @using SistemaInventario.Utilidades
 @{
     ViewData["Title"] = "Home Page";
@@ -74,3 +76,96 @@
 
     </div>
 </section>
+
+@* contenido de relleno *@
+<div class="container mt-4">
+    <h1 class="text-center">Bienvenido a Nuestra Tienda</h1>
+    <p class="text-center">Descubre los mejores productos para ti. Calidad y servicio al mejor precio.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200?text=Celulares" class="card-img-top" alt="Celulares">
+                <div class="card-body">
+                    <h5 class="card-title">Celulares</h5>
+                    <p class="card-text">Encuentra los últimos modelos de celulares con tecnología de punta.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-primary">Ver Productos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200?text=Electrodomésticos" class="card-img-top" alt="Electrodomésticos">
+                <div class="card-body">
+                    <h5 class="card-title">Electrodomésticos</h5>
+                    <p class="card-text">Mejora tu hogar con nuestros electrodomésticos eficientes y modernos.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-primary">Ver Productos</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200?text=Moda" class="card-img-top" alt="Moda">
+                <div class="card-body">
+                    <h5 class="card-title">Moda</h5>
+                    <p class="card-text">Explora nuestra colección de ropa y accesorios para todas las ocasiones.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-primary">Ver Productos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5 text-center">Ofertas Especiales</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-bg-success mb-3">
+                <div class="card-header">Descuento del 20%</div>
+                <div class="card-body">
+                    <h5 class="card-title">Compra un celular y ahorra</h5>
+                    <p class="card-text">Aprovecha nuestras ofertas y obtén un 20% de descuento en la compra de tu nuevo celular.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-light">Ver Ofertas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-danger mb-3">
+                <div class="card-header">Liquidación Total</div>
+                <div class="card-body">
+                    <h5 class="card-title">Hasta 50% de descuento</h5>
+                    <p class="card-text">Liquidación de verano. Hasta un 50% de descuento en productos seleccionados.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-light">Ver Ofertas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-warning mb-3">
+                <div class="card-header">Envío Gratis</div>
+                <div class="card-body">
+                    <h5 class="card-title">Envío gratis en compras mayores a $100</h5>
+                    <p class="card-text">Compra ahora y recibe tu pedido en la puerta de tu casa sin costo adicional.</p>
+                    <a asp-action="Index" asp-controller="Producto" class="btn btn-light">Ver Ofertas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-5 text-center">¿Por Qué Elegirnos?</h2>
+    <div class="row text-center mt-3">
+        <div class="col-md-4">
+            <i class="bi bi-check-circle fs-1 text-primary"></i>
+            <h4>Calidad Garantizada</h4>
+            <p>Todos nuestros productos pasan por estrictos controles de calidad.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="bi bi-star fs-1 text-primary"></i>
+            <h4>Soporte 24/7</h4>
+            <p>Ofrecemos asistencia al cliente en todo momento. Estamos aquí para ayudarte.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="bi bi-truck fs-1 text-primary"></i>
+            <h4>Envío Rápido</h4>
+            <p>Recibe tus productos en tiempo récord con nuestro servicio de entrega rápida.</p>
+        </div>
+    </div>
+</div>
+
