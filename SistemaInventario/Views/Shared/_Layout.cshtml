@@ -22,7 +22,7 @@
     <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
     <link href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">@* agrego estas clases para hacer que ocupe todo el alto de la pantalla *@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -132,7 +132,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-auto" >@* con mt-auto hago que el footer se quede abajo *@
         <div class="container">
             &copy; 2024 - SistemaInventario - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
