@@ -2,6 +2,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
 <!-- BTN para agregar deposito que redirecciona a otra vista con asp-action="Upsert"-->
 <div class="row">
     <div class="col-lg-6">
@@ -20,7 +21,7 @@
         <table id="tblDatos" class="table table-hover">
             <thead class="table-dark">
                 <tr>
-                    
+                    <th></th>
                     <th>Numero Serie</th>
                     <th>Descripción</th>
                     <th>Categoria</th>
@@ -36,7 +37,7 @@
     </div>
 </div>
 
-
+</div>
 
 @section Scripts {
     <script src="~/js/producto.js"></script>

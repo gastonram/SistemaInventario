@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var titulo = "Crear Producto";
 }
-
+<div class="container">
 <form method="post" enctype="multipart/form-data">
     @if (Model.Producto.Id != 0)
     {
@@ -143,6 +143,7 @@
 
 
 </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

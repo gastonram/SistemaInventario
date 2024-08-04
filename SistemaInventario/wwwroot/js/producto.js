@@ -30,7 +30,15 @@ function loadDataTable() {
         },
         "columns":
             [
-                
+                {
+                    "data": "imagenUrl", // Aquí usamos la propiedad imagenUrl
+                    "render": function (data, type, row) {
+                        // Construimos la URL completa de la imagen
+                        const imageUrl = `/imagenes/producto/${data}`;
+                        return `<img src="${imageUrl}" alt="Imagen del producto" style="width: 50px; height: auto;">`;
+                    },
+                    "width": "10%"
+                },
                 { "data": "numeroSerie"},
                 { "data": "descripcion" },
                 { "data": "categoria.nombre" },
